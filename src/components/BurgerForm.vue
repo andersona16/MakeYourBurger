@@ -16,7 +16,9 @@
           <label for="Pao"> Escolha o pão: </label>
           <select name="pao" id="pao" v-model="pao">
             <option value="">Selecione o seu pão</option>
-            <option value="Integral">Integral</option>
+            <option v-for="pao in paes" :key="pao.id" :value="pao.tipo">
+              {{ pao.tipo }}
+            </option>
           </select>
         </div>
         <div class="input-container">
@@ -30,6 +32,15 @@
           <label id="opcionais-title" for="Opcionais">
             Selecione os opcionais:
           </label>
+          <div class="checkbox-container">
+            <input
+              type="checkbox"
+              name="opcionais"
+              v-model="opcionais"
+              value="salame"
+            />
+            <span>Salame</span>
+          </div>
           <div class="checkbox-container">
             <input
               type="checkbox"
@@ -53,6 +64,29 @@
 <script>
 export default {
   name: "BurgerForm",
+  data() {
+    return {
+      paes: null,
+      carnes: null,
+      opcionaisdata: null,
+      nome: null,
+      pao: null,
+      carne: null,
+      opcionais: [],
+      status: "Solicitado",
+      msg: null,
+    };
+  },
+  methods: {
+    async getIngredientes() {
+      const req = await fetch("https://localhost:3000/ingredientes");
+      const data = await req.json();
+
+    },
+  },
+  mounted() {
+    this.getIngredientes;
+  },
 };
 </script>
 
